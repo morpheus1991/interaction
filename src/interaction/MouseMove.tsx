@@ -13,18 +13,24 @@ const MousePointer = styled.div<MousePointerProps>`
   width: ${(props) => props.pointerSize};
   height: ${(props) => props.pointerSize};
   transition: transform 0.1s;
-  background: rgba(0, 0, 0, 0.5);
+  background: ${(props) => RGBA2CSSTEXT(props.mouseDownEffectColorRGBA)};
   border-radius: 50%;
   left: ${(props) => `calc((${"-" + props.pointerSize} / 2))`};
   top: ${(props) => `calc((${"-" + props.pointerSize} / 2))`};
+  opacity: 0.2;
+
   .pointer {
     width: ${(props) => props.pointerSize};
     height: ${(props) => props.pointerSize};
     background: ${(props) => RGBA2CSSTEXT(props.pointerColorRGBA)};
     border-radius: 50%;
+    mix-blend-mode: multiply;
+    opacity: 0.2;
   }
   &.mouse-down {
     background: ${(props) => RGBA2CSSTEXT(props.mouseDownEffectColorRGBA)};
+    opacity: 0.6;
+
     .pointer {
       transform: scale(50%);
     }
@@ -40,7 +46,7 @@ interface Props {
 
 const MouseMove = ({
   pointerSize = "10px",
-  pointerColor = "#b925f4", //hex , rgba
+  pointerColor = "#fe0d0d", //hex , rgba
   mouseDownEffectColor = "#27e6b3",
 }: Props) => {
   const vaildColor = (color: Rgba | string) => {

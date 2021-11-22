@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Mouse from "./interaction/Mouse";
 import { useSelector } from "react-redux";
 import { RootReducerType } from "./store";
+import MouseMoveBird from "./interaction/MouseMoveBird";
 
 const Block = styled.div`
   width: 100vw;
@@ -16,9 +17,14 @@ function App() {
   console.log(mouseInfo);
   return (
     <Block className="App">
-      <Mouse></Mouse>
+      <MouseMove pointerSize="40px"></MouseMove>
+      <img
+        className=""
+        src="https://paidpost-assets.nyt.com/paidpost/allbirds/birds-eye-view/images/5-ac49bfdc.png"
+      />
+      {/* <MouseMoveBird></MouseMoveBird> */}
+      {/* <Mouse></Mouse> */}
       {/* <MouseMove />
-      <MouseMove />
       <MouseMove />
       <MouseMove />
       <MouseMove />
