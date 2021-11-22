@@ -12,19 +12,18 @@ const MousePointer = styled.div<MousePointerProps>`
   position: fixed;
   width: ${(props) => props.pointerSize};
   height: ${(props) => props.pointerSize};
-  transform: translateX(-50%) translateY(-50%) scale(100%);
-  transition: transform 0.2s;
+  transition: transform 0.1s;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
+  left: ${(props) => `calc((${"-" + props.pointerSize} / 2))`};
+  top: ${(props) => `calc((${"-" + props.pointerSize} / 2))`};
   .pointer {
     width: ${(props) => props.pointerSize};
     height: ${(props) => props.pointerSize};
     background: ${(props) => RGBA2CSSTEXT(props.pointerColorRGBA)};
     border-radius: 50%;
-    transition: top 0.1s, left 0.1s;
   }
   &.mouse-down {
-    transform: translateX(-50%) translateY(-50%) scale(200%);
     background: ${(props) => RGBA2CSSTEXT(props.mouseDownEffectColorRGBA)};
     .pointer {
       transform: scale(50%);
@@ -60,17 +59,37 @@ const MouseMove = ({
     : (HEX2RGBA(mouseDownEffectColor as string) as Rgba);
 
   const pointerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    let x = 0;
+    let y = 0;
+    let mx = 0;
+    let my = 0;
+    let speed = 1;
+    let mouseDown = false;
+    const loop = () => {
+      console.log("loop");
+      mx += (x - mx) * speed;
+      //mx = mx + (x - mx) * speed
+      my += (y - my) * speed;
+      pointerRef.current!.style.transform = `translate(${mx}px,${my}px) scale(${
+        mouseDown ? "100%" : "200%"
+      })`;
+      window.requestAnimationFrame(loop);
+    };
+    loop();
+    document.querySelector("html")!.style.cursor = "none";
     window.addEventListener("mousemove", (e) => {
-      console.log("dd");
-      pointerRef.current!.style.left = `${e.clientX}px`;
-      pointerRef.current!.style.top = `${e.clientY}px`;
+      x = e.clientX;
+      y = e.clientY;
     });
     window.addEventListener("mousedown", () => {
       pointerRef.current!.classList.toggle("mouse-down");
+      mouseDown = true;
     });
     window.addEventListener("mouseup", () => {
       pointerRef.current!.classList.toggle("mouse-down");
+      mouseDown = false;
     });
   }, []);
 

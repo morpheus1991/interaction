@@ -32,12 +32,10 @@ export function validRGBA(rgba: Rgba) {
     return true;
   }
 }
-
 //Rgba값을 받아와서 문자열 "rgba(0,0,0,0.1)" 형식으로 반환
 export function RGBA2CSSTEXT(rgba: Rgba) {
   return `rgba(${rgba.join(",")})`;
 }
-
 //RGBA → HEX
 export function RGBA2HEX(rgba: Rgba) {
   if (!validRGBA(rgba)) {
@@ -50,15 +48,12 @@ export function RGBA2HEX(rgba: Rgba) {
         ? parseInt(c).toString(16)
         : "0" + parseInt(c).toString(16);
   });
-
   //alpha value change
   if (rgba[3]) {
     hex += parseInt(`${255 * Number(rgba[3])}`).toString(16);
   }
-
   return `#${hex.toUpperCase()}`;
 }
-
 //hex validation check
 export function validHEX(hex: string) {
   if (typeof hex !== "string") {
@@ -67,13 +62,11 @@ export function validHEX(hex: string) {
   const reg = new RegExp(/^\#?[0-9a-fA-F]{6,8}$/);
   return reg.test(hex);
 }
-
 //HEX → RGBA
 export function HEX2RGBA(hex: string): Rgba {
   if (!validHEX(hex)) {
     throw new Error(`'${hex}' is not valid hex format!`);
   }
-
   let temp = hex.replace("#", "");
   let len = temp.length / 2;
   let rgba: string[] = [];
